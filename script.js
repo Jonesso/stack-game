@@ -16,6 +16,8 @@ const scoreElement = document.getElementById("score");
 const manualElement = document.getElementById("manual");
 const resultsElement = document.getElementById("results");
 
+const MOBILE_DEVICES_REGEX = /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i;
+
 function addLayer(x, z, width, depth, direction) {
   const y = boxHeight * stack.length; 
   const layer = generateBox(x, y, z, width, depth, false);
@@ -166,10 +168,13 @@ function startGame() {
 
 
 
+if (MOBILE_DEVICES_REGEX.test(navigator.userAgent)) {
+  window.addEventListener("touchstart", eventHandler);
+  window.addEventListener("touchmove", startGame);
+} else {
+  window.addEventListener("mousedown", eventHandler);
+}
 
-
-window.addEventListener("mousedown", eventHandler);
-window.addEventListener("touchstart", eventHandler);
 window.addEventListener("keydown", function (event) {
   if (event.key == " ") {
     event.preventDefault();
